@@ -10,7 +10,9 @@ import {
     Section,
     Columns,
     Box,
-    Image
+    Image,
+    Notification,
+    Button
 } from 'react-bulma-components';
 
 const _host = 'http://192.168.11.237';
@@ -19,6 +21,7 @@ function LoginUser(props) {
 
     const [user, setUser] = useState([]);
     const [view, setView] = useState('login');
+    const [hasError, setError] = useState(false);
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
@@ -38,7 +41,7 @@ function LoginUser(props) {
             })
             .catch(function (response) {
                 console.log(response);
-                props.history.replace('/');
+                setError(true);
             });
     };
 
@@ -83,6 +86,10 @@ function LoginUser(props) {
                             </Columns.Column>
 
                             <Columns.Column>
+                                {hasError && <Notification color="danger">
+                                    Error al iniciar sesión <Button remove />
+                                </Notification>}
+
                                 <h1 class="title">
                                     <span onClick={() => setView('login')}>Iniciar Sesión</span> |
                                     <span onClick={() => setView('Registration')}> Crear Cuenta</span>
