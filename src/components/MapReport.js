@@ -2,21 +2,18 @@ import React from "react"
 import { compose, withProps, lifecycle } from "recompose"
 import { withScriptjs, withGoogleMap,
     GoogleMap,
-    Marker,
-    Circle,
-    DirectionsRenderer } from "react-google-maps"
-import _ from 'lodash'
+   } from "react-google-maps"
 import axios from 'axios'
-const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
+import { Button } from 'react-bulma-components'
 
 
 const { SearchBox } = require("react-google-maps/lib/components/places/SearchBox");
-/*global google*/   
+/*global google*/
 const MyMapComponent = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAXZTJXvEgehQOxG8Vdc3MgwzdD3dsYGUI",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
+    containerElement: <div style={{ height: `600px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
     warningPlaces: [],
   }),
@@ -24,22 +21,6 @@ const MyMapComponent = compose(
   withGoogleMap,
   lifecycle({
     componentDidMount() {
-      const DirectionsService = new google.maps.DirectionsService();
-
-      DirectionsService.route({
-        origin: new google.maps.LatLng(41.8507300, -87.6512600),
-        destination: new google.maps.LatLng(41.8525800, -87.6514100),
-        travelMode: google.maps.TravelMode.DRIVING,
-      }, (result, status) => {
-          console.log('result, status: ', result, status);
-        if (status === google.maps.DirectionsStatus.OK) {
-          this.setState({
-            directions: result,
-          });
-        } else {
-          console.error(`error fetching directions ${result}`);
-        }
-      });
 
       axios.get('http://192.168.11.234:8080/v1/incidents/')
         .then(({data}) => {
@@ -52,7 +33,6 @@ const MyMapComponent = compose(
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 position => {
-                    console.log(position.coords);
                     this.setState(prevState => ({
                             center: {
                                 lat: position.coords.latitude,
@@ -78,7 +58,6 @@ const MyMapComponent = compose(
               bounds: refs.map.getBounds(),
               center: refs.map.getCenter(),
             })
-            console.log('refs.map.getBounds(),: ', refs.map.getBounds(),);
           },
           onSearchBoxMounted: ref => {
             refs.searchBox = ref;
@@ -97,12 +76,27 @@ const MyMapComponent = compose(
             const nextMarkers = places.map(place => ({
               position: place.geometry.location,
             }));
-            const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
+            // const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
   
             this.setState({
-              center: nextCenter,
+            //   center: nextCenter,
               markers: nextMarkers,
             });
+
+        const DirectionsService = new google.maps.DirectionsService();
+      DirectionsService.route({
+        origin: new google.maps.LatLng(this.state.center.lat, this.state.center.lng),
+        destination: new google.maps.LatLng(nextMarkers[0].position.lat(), nextMarkers[0].position.lng()),
+        travelMode: google.maps.TravelMode.DRIVING,
+      }, (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          this.setState({
+            directions: result,
+          });
+        } else {
+          console.error(`error fetching directions ${result}`);
+        }
+      });
             // refs.map.fitBounds(bounds);
           },
         })
@@ -110,49 +104,48 @@ const MyMapComponent = compose(
   })
 )((props) =>
   <GoogleMap
-    defaultZoom={15}
+      defaultZoom={15}
     center={props.center}
+    options={{
+        mapTypeControl: false
+    }}
   >
-      {JSON.stringify(props)}
       <SearchBox
-      ref={props.onSearchBoxMounted}
-      bounds={props.bounds}
-      controlPosition={google.maps.ControlPosition.TOP_LEFT}
-      onPlacesChanged={props.onPlacesChanged}
+        ref={props.onSearchBoxMounted}
+        bounds={props.bounds}
+        controlPosition={google.maps.ControlPosition.TOP_LEFT}
+        onPlacesChanged={props.onPlacesChanged}
     >
       <input
         type="text"
-        placeholder="Customized your placeholder"
+        placeholder="Busca tu destino..."
         style={{
           boxSizing: `border-box`,
           border: `1px solid transparent`,
-          width: `240px`,
-          height: `32px`,
+          width: `350px`,
+          height: `60px`,
           marginTop: `27px`,
+          marginLeft: '27px',
           padding: `0 12px`,
           borderRadius: `3px`,
           boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-          fontSize: `14px`,
+          fontSize: `16px`,
           outline: `none`,
           textOverflow: `ellipses`,
         }}
       />
       </ SearchBox>
-      <MarkerClusterer
+      {/* <MarkerClusterer
          onClick={props.onMarkerClustererClick}
          averageCenter
          enableRetinaIcons
          gridSize={30}
       >
+      
+    </MarkerClusterer> */}
 
-      </MarkerClusterer>
-      {props.isMarkerShown && props.warningPlaces.map((marker, idx) =>
-          <Marker key={idx} position={{ lat: marker.latitude, lng: marker.longitude }}
-              onClick={props.onMarkerClick} />)
-      }
-        <Circle center={{ lat: 41.8507300,  lng: -87.6512600 }}
-            radius={3000} defaultRadius={50}/>)
-    {/* <DirectionsRenderer directions={props.directions} /> */}
+      
+      <Button>Reportar</Button>
   </GoogleMap>
 )
 

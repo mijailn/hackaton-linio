@@ -1,12 +1,11 @@
 import React from 'react';
-import MapContainer from './MapContainer'
-
+import MapReport from './MapReport'
 
 export default () => (
     <div>
         <nav class="navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <div role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+                <div href="" role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -19,6 +18,6 @@ export default () => (
                 </div>
             </div>
         </nav>
-        <MapContainer />
+        <MapReport />
     </div>
-) 
+)

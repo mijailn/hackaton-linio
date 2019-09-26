@@ -3,9 +3,7 @@ import { compose, withProps, lifecycle } from "recompose"
 import { withScriptjs, withGoogleMap,
     GoogleMap,
     Marker,
-    Circle,
     DirectionsRenderer } from "react-google-maps"
-import _ from 'lodash'
 import axios from 'axios'
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 
@@ -24,7 +22,6 @@ const MyMapComponent = compose(
   withGoogleMap,
   lifecycle({
     componentDidMount() {
-        /*global ClusterIcon*/
 
       axios.get('http://192.168.11.234:8080/v1/incidents/')
         .then(({data}) => {
@@ -80,7 +77,7 @@ const MyMapComponent = compose(
             const nextMarkers = places.map(place => ({
               position: place.geometry.location,
             }));
-            const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
+            // const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
   
             this.setState({
             //   center: nextCenter,
