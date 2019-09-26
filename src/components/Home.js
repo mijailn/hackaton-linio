@@ -1,5 +1,6 @@
 import React from 'react';
 import MapContainer from './MapContainer'
+import { Link } from 'react-router-dom'
 
 
 export default () => (
@@ -14,7 +15,7 @@ export default () => (
 
                 <div class="navbar-menu" id="navMenu">
                     <div class="navbar-item">Buscar Ruta Segura</div>
-                    <div class="navbar-item">Reportar Incidente</div>
+                    <Link class="navbar-item" to="/report">Reportar Incidente</Link>
                     <div class="navbar-item">Ayuda</div>
                 </div>
             </div>
