@@ -11,12 +11,12 @@ const { MarkerClusterer } = require("react-google-maps/lib/components/addons/Mar
 
 
 const { SearchBox } = require("react-google-maps/lib/components/places/SearchBox");
-/*global google*/   
+/*global google*/
 const MyMapComponent = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyAXZTJXvEgehQOxG8Vdc3MgwzdD3dsYGUI",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
+    containerElement: <div style={{ height: `600px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
     warningPlaces: [],
   }),
