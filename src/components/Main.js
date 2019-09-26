@@ -20,6 +20,10 @@ function LoginUser(props) {
     const [view, setView] = useState('login');
     const [hasError, setError] = useState(false);
 
+    if (localStorage.getItem('hackaton-mosca')) {
+        props.history.replace('/Home');
+    }
+
     const handleOnSubmit = (event) => {
         event.preventDefault();
         var bodyFormData = new FormData();
@@ -33,7 +37,7 @@ function LoginUser(props) {
             config: { headers: { 'Content-Type': 'multipart/form-data' } }
         })
             .then(function (response) {
-                localStorage.setItem("hackaton-mosca", response.data.token);
+                localStorage.setItem('hackaton-mosca', response.data.token);
                 props.history.replace('/Home');
             })
             .catch(function (response) {
