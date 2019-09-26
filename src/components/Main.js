@@ -56,9 +56,11 @@ function LoginUser(props) {
             config: { headers: { 'Content-Type': 'multipart/form-data' } }
         })
             .then(function (response) {
+                props.history.replace('/Home');
                 console.log(response);
             })
             .catch(function (response) {
+                props.history.replace('/');
                 console.log(response);
             });
     };
