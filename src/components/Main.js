@@ -3,10 +3,7 @@ import 'bulma'
 import axios from 'axios';
 
 import {
-    Content,
-    Hero,
     Container,
-    Heading,
     Section,
     Columns,
     Box,
@@ -156,7 +153,7 @@ function LoginUser(props) {
                                             <div className="field">
                                                 <div className="control">
                                                     <label className="checkbox">
-                                                        <input type="checkbox" /> I agree to the <a href="#">terms and conditions</a>
+                                                        <input type="checkbox" /> I agree to the terms and conditions
                                                     </label>
                                                 </div>
                                             </div>

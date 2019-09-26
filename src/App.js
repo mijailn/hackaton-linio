@@ -4,6 +4,7 @@ import './App.css';
 import Main from './components/Main'
 import Home from './components/Home'
 import 'bulma'
+import HomeReport from "./components/HomeReport";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <div>
         <Route exact path="/" component={Main} />
         <Route path="/home" component={Home} />
+        <Route path="/report" component={HomeReport} />
       </div>
     </Router>
   );
