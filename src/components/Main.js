@@ -15,7 +15,7 @@ import {
 
 const _host = 'http://192.168.11.237';
 
-function LoginUser() {
+function LoginUser(props) {
 
     const [user, setUser] = useState([]);
     const [view, setView] = useState('login');
@@ -34,9 +34,11 @@ function LoginUser() {
         })
             .then(function (response) {
                 localStorage.setItem("hackaton-mosca", response.data.token);
+                props.history.replace('/Home');
             })
             .catch(function (response) {
                 console.log(response);
+                props.history.replace('/');
             });
     };
 
