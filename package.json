@@ -7,7 +7,7 @@
     "bulma": "^0.7.5",
     "google-maps-react": "^2.0.2",
     "lodash": "^4.17.15",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.9.0",
     "react-bulma-components": "^2.3.0",
     "react-dom": "^16.9.0",
